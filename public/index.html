@@ -6,26 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Chat Room</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
-    <script src="main.js"></script>
 </head>
 
 <body>
     <section class="container">
         <div id="chat-area">
-            <div id="input-bar">
-                <input id="text-area">
+            <div id="scroll-area">
+                <ul id="messages"></ul>
+            </div>
+            </ul>
+            <form id="input-bar" action="">
+                <input id="text-area" autocomplete="off" />
                 <button id="send-btn">
                     <i class="far fa-paper-plane"></i>
                 </button>
-            </div>
+            </form>
+        </div>
         </div>
         <div id="users-area">
 
         </div>
     </section>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            $('form').submit(function (e) {
+                e.preventDefault(); // prevents page reloading
+                var msg = $('#text-area').val();
+                if (msg.length != 0) {
+                    socket.emit('chat message', $('#text-area').val());
+                    $('#text-area').val('');
+                    return false;
+                }
+            });
+            socket.on('chat message', function (msg) {
+                $('#messages').append($('<li class="message">').text(msg));
+            });
+        });
+    </script>
 </body>
 
 </html>
