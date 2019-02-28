@@ -12,21 +12,19 @@
 </head>
 
 <body>
-    <section class="container">
-        <div id="chat-area">
-            <div id="scroll-area">
-                <ul id="messages"></ul>
-            </div>
+    <section id="main-container">
+        <div id="left-container">
+            <ul id="messages-container">
             </ul>
-            <form id="input-bar" action="">
-                <input id="text-area" autocomplete="off" />
+            <form id="input-container" action="">
+                <input id="input-field" autocomplete="off" />
                 <button id="send-btn">
                     <i class="far fa-paper-plane"></i>
                 </button>
             </form>
         </div>
         </div>
-        <div id="users-area">
+        <div id="right-container">
 
         </div>
     </section>
@@ -38,15 +36,18 @@
             var socket = io();
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
-                var msg = $('#text-area').val();
+                var msg = $('#input-field').val();
                 if (msg.length != 0) {
-                    socket.emit('chat message', $('#text-area').val());
-                    $('#text-area').val('');
+                    socket.emit('chat message', $('#input-field').val());
+                    $('#input-field').val('');
                     return false;
                 }
             });
-            socket.on('chat message', function (msg) {
-                $('#messages').append($('<li class="message">').text(msg));
+            socket.on('chat message', function (msgJson) {
+                var msg = JSON.parse(msgJson);
+                $('#messages-container').append($('<li class="message">').text(msg.timestamp +
+                    " " + msg.nickname + ": " +
+                    msg.message));
             });
         });
     </script>

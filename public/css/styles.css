@@ -6,44 +6,55 @@ section {
     font-family: Arial, Helvetica, sans-serif
 }
 
-.container {
+#main-container {
     display: flex;
 }
 
-#chat-area {
+#left-container {
+    background-color: #282a3a;
     background-color: #282a3a;
     flex: 4;
     display: flex;
     flex-direction: column;
 }
 
-#scroll-area {
-    overflow: auto;
-    flex: 7;
+#right-container {
+    background-color: #1e1f2b;
+    flex: 1;
 }
 
-#input-bar {
+#messages-container {
+    overflow: auto;
+    flex: 9;
+    padding: 25px;
+}
+
+#scroll-area {
+    height: 100%;
+    margin: 25px;
+}
+
+#input-container {
     border-color: transparent;
     position: relative;
     color: #ffffff;
     display: flex;
     flex: 1;
+    padding: 25px;
 }
 
-#text-area {
+#input-field {
     background-color: #3a3d4b;
     border: transparent;
     flex: 15;
-    margin: 25px 0 25px 20px;
-    padding: 0 0 0 25px;
     border-radius: 15px 0 0 15px;
+    padding: 0 0 0 25px;
     color: white;
     font-size: 1.5em;
 }
 
 #send-btn {
     flex: 1;
-    margin: 25px 20px 25px 0;
     border-radius: 0 15px 15px 0;
     background-color: #a7c05b;
     border: transparent;
@@ -51,27 +62,14 @@ section {
     font-size: 1.5em;
 }
 
-#text-area:focus,
+#input-field:focus,
 #send-btn:focus {
     outline: 0;
 }
 
-#users-area {
-    background-color: #1e1f2b;
-    flex: 1;
-}
-
-#messages {
-    list-style-type: none;
-}
-
 .message {
     color: white;
-    background-color: #3a3d4b;
-    position: relative;
-    display: table;
-    width: auto;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
+    list-style-type: none;
+    margin: 10px 0;
+    font-size: 1.5em;
 }
