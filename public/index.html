@@ -14,8 +14,9 @@
 <body>
     <section id="main-container">
         <div id="left-container">
-            <ul id="messages-container">
-            </ul>
+            <div id="messages-container">
+                <div id="nickname-display">You are connected as USER</div>
+            </div>
             <form id="input-container" action="">
                 <input id="input-field" autocomplete="off" />
                 <button id="send-btn">
@@ -49,6 +50,10 @@
                     " " + msg.nickname + ": " +
                     msg.message));
             });
+            socket.on('nickname', function (msg) {
+                console.log(msg);
+                $('#nickname-display').text("You are connected as " + msg);
+            })
         });
     </script>
 </body>

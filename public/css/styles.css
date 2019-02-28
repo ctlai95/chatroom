@@ -12,7 +12,6 @@ section {
 
 #left-container {
     background-color: #282a3a;
-    background-color: #282a3a;
     flex: 4;
     display: flex;
     flex-direction: column;
@@ -29,9 +28,11 @@ section {
     padding: 25px;
 }
 
-#scroll-area {
-    height: 100%;
-    margin: 25px;
+#nickname-display {
+    position: relative;
+    text-align: center;
+    top: 0;
+    color: #ffffff;
 }
 
 #input-container {
@@ -60,6 +61,7 @@ section {
     border: transparent;
     color: white;
     font-size: 1.5em;
+    cursor: pointer;
 }
 
 #input-field:focus,
