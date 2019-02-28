@@ -15,7 +15,8 @@
     <section id="main-container">
         <div id="left-container">
             <div id="messages-container">
-                <div id="nickname-display">You are connected as USER</div>
+                <div id="nickname-display"></div>
+                <ul id="chat-messages"></ul>
             </div>
             <form id="input-container" action="">
                 <input id="input-field" autocomplete="off" />
@@ -46,7 +47,7 @@
             });
             socket.on('chat message', function (msgJson) {
                 var msg = JSON.parse(msgJson);
-                $('#messages-container').append($('<li class="message">').text(msg.timestamp +
+                $('#chat-messages').append($('<li class="message">').text(msg.timestamp +
                     " " + msg.nickname + ": " +
                     msg.message));
             });

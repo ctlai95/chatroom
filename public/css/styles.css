@@ -25,7 +25,26 @@ section {
 #messages-container {
     overflow: auto;
     flex: 9;
-    padding: 25px;
+}
+
+#messages-container:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: bottom;
+}
+
+#chat-messages {
+    display: inline-block;
+    vertical-align: bottom;
+    list-style: none;
+}
+
+.message {
+    color: white;
+    list-style-type: none;
+    margin: 10px 0;
+    font-size: 1.5em;
 }
 
 #nickname-display {
@@ -67,11 +86,4 @@ section {
 #input-field:focus,
 #send-btn:focus {
     outline: 0;
-}
-
-.message {
-    color: white;
-    list-style-type: none;
-    margin: 10px 0;
-    font-size: 1.5em;
 }
