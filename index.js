@@ -14,17 +14,17 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    namesList[socket.id] = getUniqueNickname();
+    namesList[socket.id] = nicknames.allRandom();
     socket.emit('nickname', namesList[socket.id]);
     for (i = 0; i < chatHistory.length; i++) {
         socket.emit('chat message', chatHistory[i]);
     }
 
-    console.log(namesList[socket.id] + " connected");
+    console.log(`${namesList[socket.id]} connected`)
     io.emit('user list', namesList);
 
     socket.on('disconnect', function () {
-        console.log(namesList[socket.id] + " disconnected");
+        console.log(`${namesList[socket.id]} disconnected`)
         delete namesList[socket.id];
         io.emit('user list', namesList);
     });
@@ -33,16 +33,18 @@ io.on('connection', function (socket) {
             nickname: namesList[socket.id],
             message: msg,
             timestamp: getTimeStamp(),
-        })
+        });
+        console.log(jsonMsg);
 
         saveMessage(jsonMsg);
         io.emit('chat message', jsonMsg);
     });
 
-    socket.on('name change', function (msg) {
-        console.log('Name change: ' + namesList[socket.id] + ' to ' + msg);
-        namesList[socket.id] = msg;
+    socket.on('name change', function (name) {
+        console.log(`${namesList[socket.id]} changed their name to ${name}`);
+        namesList[socket.id] = name;
         io.emit('user list', namesList);
+        socket.emit('nickname', namesList[socket.id]);
     })
 });
 
@@ -57,10 +59,6 @@ function getTimeStamp() {
         minute: '2-digit',
         hour12: false,
     });
-}
-
-function getUniqueNickname() {
-    return nicknames.allRandom();
 }
 
 function saveMessage(msg) {
