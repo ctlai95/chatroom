@@ -22,6 +22,19 @@ section {
     flex: 1;
 }
 
+#current-users-title {
+    font-size: 1.5em;
+    text-align: center;
+    color: #ffffff;
+    padding: 15px 0 15px 0;
+}
+
+#current-users {
+    color: #ffffff;
+    list-style: none;
+    font-size: 1.5em;
+}
+
 #messages-container {
     overflow: auto;
     flex: 15;

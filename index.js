@@ -3,7 +3,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 var path = require('path');
-var nicknames = {};
+var nicknames = require('nicknames');
+var namesList = {};
 var chatHistory = [];
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -13,21 +14,23 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    nicknames[socket.id] = getUniqueNickname();
-    socket.emit('nickname', nicknames[socket.id]);
+    namesList[socket.id] = getUniqueNickname();
+    socket.emit('nickname', namesList[socket.id]);
     for (i = 0; i < chatHistory.length; i++) {
         socket.emit('chat message', chatHistory[i]);
     }
 
-    console.log(nicknames[socket.id] + " connected");
+    console.log(namesList[socket.id] + " connected");
+    io.emit('user list', namesList);
+
     socket.on('disconnect', function () {
-        console.log(nicknames[socket.id] + " disconnected");
+        console.log(namesList[socket.id] + " disconnected");
+        delete namesList[socket.id];
+        io.emit('user list', namesList);
     });
     socket.on('chat message', function (msg) {
-        console.log('message: ' + msg);
-
         let jsonMsg = JSON.stringify({
-            nickname: nicknames[socket.id],
+            nickname: namesList[socket.id],
             message: msg,
             timestamp: getTimeStamp(),
         })
@@ -51,7 +54,7 @@ function getTimeStamp() {
 }
 
 function getUniqueNickname() {
-    return "User" + Object.keys(nicknames).length;
+    return nicknames.allRandom();
 }
 
 function saveMessage(msg) {
@@ -60,5 +63,4 @@ function saveMessage(msg) {
     }
 
     chatHistory.push(msg);
-    console.log(chatHistory);
 }

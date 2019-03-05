@@ -27,7 +27,11 @@
         </div>
         </div>
         <div id="right-container">
-
+            <div id="current-users-title">Current Users</div>
+            <ul id="current-users">
+                <li>Test</li>
+            </ul>
+        </div>
         </div>
     </section>
 
@@ -54,9 +58,14 @@
                 scrollDiv.scrollTop = scrollDiv.scrollHeight;
             });
             socket.on('nickname', function (msg) {
-                console.log(msg);
                 $('#nickname-display').text("You are connected as " + msg);
-            })
+            });
+            socket.on('user list', function (msg) {
+                $("#current-users").empty();
+                for (var key in msg) {
+                    $("#current-users").append($('<li>').text(msg[key]));
+                }
+            });
         });
     </script>
 </body>
