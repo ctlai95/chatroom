@@ -14,8 +14,8 @@
 <body>
     <section id="main-container">
         <div id="left-container">
+            <div id="nickname-display"></div>
             <div id="messages-container">
-                <div id="nickname-display"></div>
                 <ul id="chat-messages"></ul>
             </div>
             <form id="input-container" action="">
@@ -50,6 +50,8 @@
                 $('#chat-messages').append($('<li class="message">').text(msg.timestamp +
                     " " + msg.nickname + ": " +
                     msg.message));
+                var scrollDiv = document.getElementById("messages-container");
+                scrollDiv.scrollTop = scrollDiv.scrollHeight;
             });
             socket.on('nickname', function (msg) {
                 console.log(msg);

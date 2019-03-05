@@ -24,7 +24,7 @@ section {
 
 #messages-container {
     overflow: auto;
-    flex: 9;
+    flex: 15;
 }
 
 #messages-container:after {
@@ -52,6 +52,8 @@ section {
     text-align: center;
     top: 0;
     color: #ffffff;
+    font-size: 1.5em;
+    padding: 10px 0 15px 0;
 }
 
 #input-container {
