@@ -1,9 +1,9 @@
+var generateName = require('sillyname');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 var path = require('path');
-var nicknames = require('nicknames');
 var namesList = {};
 var chatHistory = [];
 
@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    namesList[socket.id] = nicknames.allRandom();
+    namesList[socket.id] = generateName();
     socket.emit('nickname', namesList[socket.id]);
     for (i = 0; i < chatHistory.length; i++) {
         socket.emit('chat message', chatHistory[i]);
