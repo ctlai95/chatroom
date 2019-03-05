@@ -38,6 +38,12 @@ io.on('connection', function (socket) {
         saveMessage(jsonMsg);
         io.emit('chat message', jsonMsg);
     });
+
+    socket.on('name change', function (msg) {
+        console.log('Name change: ' + namesList[socket.id] + ' to ' + msg);
+        namesList[socket.id] = msg;
+        io.emit('user list', namesList);
+    })
 });
 
 http.listen(3000, function () {

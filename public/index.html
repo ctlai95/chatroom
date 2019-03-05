@@ -42,8 +42,13 @@
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
                 var msg = $('#input-field').val();
-                if (msg.length != 0) {
-                    socket.emit('chat message', $('#input-field').val());
+                if (msg.length === 0) {
+                    return
+                } else if (msg.slice(0, 6) === "/nick ") {
+                    socket.emit('name change', msg.slice(6, msg.length));
+                    $('#input-field').val('');
+                } else {
+                    socket.emit('chat message', msg);
                     $('#input-field').val('');
                     return false;
                 }
