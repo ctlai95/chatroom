@@ -55,19 +55,19 @@
             });
             socket.on('chat message', function (msgJson) {
                 var msg = JSON.parse(msgJson);
-                $('#chat-messages').append($('<li class="message">').text(msg.timestamp +
-                    " " + msg.nickname + ": " +
-                    msg.message));
+                $('#chat-messages').append($('<li class="message">').text(
+                    `${msg.timestamp} ${msg.nickname}: ${msg.message}`));
                 var scrollDiv = document.getElementById("messages-container");
-                scrollDiv.scrollTop = scrollDiv.scrollHeight;
+                scrollDiv.scrollTop =
+                    scrollDiv.scrollHeight;
             });
-            socket.on('nickname', function (msg) {
-                $('#nickname-display').text("You are connected as " + msg);
+            socket.on('nickname', function (name) {
+                $('#nickname-display').text(`You are connected as ${name}`);
             });
-            socket.on('user list', function (msg) {
+            socket.on('user list', function (userList) {
                 $("#current-users").empty();
-                for (var key in msg) {
-                    $("#current-users").append($('<li>').text(msg[key]));
+                for (var key in userList) {
+                    $("#current-users").append($('<li>').text(userList[key]));
                 }
             });
             socket.on('username taken', function (name) {
