@@ -70,6 +70,9 @@
                     $("#current-users").append($('<li>').text(msg[key]));
                 }
             });
+            socket.on('username taken', function (name) {
+                alert(`Username "${name}" has already been taken`);
+            });
         });
     </script>
 </body>

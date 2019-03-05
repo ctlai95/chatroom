@@ -41,6 +41,11 @@ io.on('connection', function (socket) {
     });
 
     socket.on('name change', function (name) {
+        if (nameExists(name)) {
+            console.log(`Username "${name}" taken`);
+            socket.emit('username taken', name);
+            return;
+        }
         console.log(`${namesList[socket.id]} changed their name to ${name}`);
         namesList[socket.id] = name;
         io.emit('user list', namesList);
@@ -67,4 +72,13 @@ function saveMessage(msg) {
     }
 
     chatHistory.push(msg);
+}
+
+function nameExists(name) {
+    for (var key in namesList) {
+        if (name === namesList[key]) {
+            return true;
+        }
+    }
+    return false;
 }
