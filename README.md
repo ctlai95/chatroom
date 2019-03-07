@@ -1,1 +1,3 @@
-# SENG513A3
+# chatroom
+
+A simple Node.js chat room example.
