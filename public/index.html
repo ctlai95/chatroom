@@ -67,8 +67,9 @@
             });
             socket.on('user list', function (userList) {
                 $("#current-users").empty();
-                for (var key in userList) {
-                    $("#current-users").append($('<li>').text(userList[key]));
+                let unique = [...new Set(userList)];
+                for (var i in unique) {
+                    $("#current-users").append($('<li>').text(unique[i]));
                 }
             });
             socket.on('username taken', function (name) {

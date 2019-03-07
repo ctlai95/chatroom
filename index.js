@@ -1,11 +1,12 @@
-var generateName = require('sillyname');
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var express = require('express');
-var path = require('path');
-var cookie = require('cookie');
-var namesList = {};
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const express = require('express');
+const path = require('path');
+const cookie = require('cookie');
+const generateName = require('sillyname');
+
+var namesList = [];
 var chatHistory = [];
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -16,24 +17,26 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
     let userCookie = socket.handshake.headers.cookie;
-    namesList[socket.id] = ((userCookie != null) ? cookie.parse(userCookie).name : generateName());
+    let username = ((userCookie != null) ? cookie.parse(userCookie).name : generateName());
 
-    socket.emit('nickname', namesList[socket.id]);
+    namesList.push(username);
+
+    socket.emit('nickname', username);
     for (i = 0; i < chatHistory.length; i++) {
         socket.emit('chat message', chatHistory[i]);
     }
 
-    console.log(`${namesList[socket.id]} connected`);
+    console.log(`${username} connected`);
     io.emit('user list', namesList);
 
     socket.on('disconnect', function () {
-        console.log(`${namesList[socket.id]} disconnected`)
-        delete namesList[socket.id];
+        console.log(`${username} disconnected`)
+        removeByValue(namesList, username);
         io.emit('user list', namesList);
     });
     socket.on('chat message', function (msg) {
         let jsonMsg = JSON.stringify({
-            nickname: namesList[socket.id],
+            nickname: username,
             message: msg,
             timestamp: getTimeStamp(),
         });
@@ -49,10 +52,11 @@ io.on('connection', function (socket) {
             socket.emit('username taken', name);
             return;
         }
-        console.log(`${namesList[socket.id]} changed their name to ${name}`);
-        namesList[socket.id] = name;
+        console.log(`${username} changed their name to ${name}`);
+        username = name;
+        namesList.indexOf(username) = name;
         io.emit('user list', namesList);
-        socket.emit('nickname', namesList[socket.id]);
+        socket.emit('nickname', username);
     });
 });
 
@@ -77,11 +81,9 @@ function saveMessage(msg) {
     chatHistory.push(msg);
 }
 
-function nameExists(name) {
-    for (var key in namesList) {
-        if (name === namesList[key]) {
-            return true;
-        }
+function removeByValue(arr, val) {
+    let index = arr.indexOf(val);
+    if (index !== -1) {
+        arr.splice(index, 1);
     }
-    return false;
 }
