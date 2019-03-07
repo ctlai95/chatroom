@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
 var path = require('path');
+var cookie = require('cookie');
 var namesList = {};
 var chatHistory = [];
 
@@ -14,13 +15,15 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-    namesList[socket.id] = generateName();
+    let userCookie = socket.handshake.headers.cookie;
+    namesList[socket.id] = ((userCookie != null) ? cookie.parse(userCookie).name : generateName());
+
     socket.emit('nickname', namesList[socket.id]);
     for (i = 0; i < chatHistory.length; i++) {
         socket.emit('chat message', chatHistory[i]);
     }
 
-    console.log(`${namesList[socket.id]} connected`)
+    console.log(`${namesList[socket.id]} connected`);
     io.emit('user list', namesList);
 
     socket.on('disconnect', function () {
@@ -50,7 +53,7 @@ io.on('connection', function (socket) {
         namesList[socket.id] = name;
         io.emit('user list', namesList);
         socket.emit('nickname', namesList[socket.id]);
-    })
+    });
 });
 
 http.listen(3000, function () {

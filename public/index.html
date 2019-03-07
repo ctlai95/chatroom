@@ -63,6 +63,7 @@
             });
             socket.on('nickname', function (name) {
                 $('#nickname-display').text(`You are connected as ${name}`);
+                document.cookie = `name=${name}`;
             });
             socket.on('user list', function (userList) {
                 $("#current-users").empty();
