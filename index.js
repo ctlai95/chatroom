@@ -47,14 +47,14 @@ io.on('connection', function (socket) {
     });
 
     socket.on('name change', function (name) {
-        if (nameExists(name)) {
+        if (namesList.indexOf(name) !== -1) {
             console.log(`Username "${name}" taken`);
             socket.emit('username taken', name);
             return;
         }
         console.log(`${username} changed their name to ${name}`);
+        namesList[namesList.indexOf(username)] = name;
         username = name;
-        namesList.indexOf(username) = name;
         io.emit('user list', namesList);
         socket.emit('nickname', username);
     });
