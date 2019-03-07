@@ -5,34 +5,39 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Chat Room</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
     <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-    <section id="main-container">
-        <div id="left-container">
-            <div id="nickname-display"></div>
-            <div id="messages-container">
-                <ul id="chat-messages"></ul>
+    <div id="warning-message">
+        This website is only viewable in landscape mode
+    </div>
+
+    <div id="wrapper">
+        <section id="main-container">
+            <div id="left-container">
+                <div id="nickname-display"></div>
+                <div id="messages-container">
+                    <ul id="chat-messages"></ul>
+                </div>
+                <form id="input-container" action="">
+                    <input id="input-field" autocomplete="off" />
+                    <button id="send-btn">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
-            <form id="input-container" action="">
-                <input id="input-field" autocomplete="off" />
-                <button id="send-btn">
-                    <i class="far fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
-        </div>
-        <div id="right-container">
-            <div id="current-users-title">Current Users</div>
-            <ul id="current-users">
-            </ul>
-        </div>
-        </div>
-    </section>
+            <div id="right-container">
+                <div id="current-users-title">Current Users</div>
+                <ul id="current-users">
+                </ul>
+            </div>
+        </section>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

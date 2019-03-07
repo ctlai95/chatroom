@@ -6,6 +6,10 @@ section {
     font-family: Arial, Helvetica, sans-serif
 }
 
+#wrapper {
+    height: 100%;
+}
+
 #main-container {
     display: flex;
 }
@@ -23,7 +27,7 @@ section {
 }
 
 #current-users-title {
-    font-size: 1.5em;
+    font-size: 1.5vw;
     text-align: center;
     color: #ffffff;
     padding: 15px 0 15px 0;
@@ -32,7 +36,7 @@ section {
 #current-users {
     color: #ffffff;
     list-style: none;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     overflow: scroll;
 }
 
@@ -58,7 +62,7 @@ section {
     color: white;
     list-style-type: none;
     margin: 10px 0;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     border-radius: 5px;
     display: flex;
 }
@@ -71,8 +75,8 @@ section {
 }
 
 .metadata {
-    font-size: 0.8em;
     font-style: italic;
+    font-size: 1vw;
     color: #676767;
     padding: 10px 0 10px 10px;
 }
@@ -118,4 +122,51 @@ section {
 #input-field:focus,
 #send-btn:focus {
     outline: 0;
+}
+
+@media only screen {
+
+    html,
+    body {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 812px) {
+    #messages-container {
+        flex: 5;
+    }
+
+    #current-users-title,
+    #current-users {
+        font-size: 1em;
+    }
+
+    #nickname-display {
+        font-size: 1em;
+    }
+}
+
+#warning-message {
+    display: none;
+}
+
+@media only screen and (orientation:portrait) {
+    #wrapper {
+        display: none;
+    }
+
+    #warning-message {
+        display: block;
+    }
+}
+
+@media only screen and (orientation:landscape) {
+    #warning-message {
+        display: none;
+    }
+
 }
