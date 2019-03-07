@@ -8,6 +8,7 @@ const generateName = require('sillyname');
 
 var namesList = [];
 var chatHistory = [];
+var colors = {};
 
 app.use(express.static(path.join(__dirname, '/public')));
 
@@ -29,6 +30,10 @@ io.on('connection', function (socket) {
     console.log(`${username} connected`);
     io.emit('user list', namesList);
 
+    if (!username in colors) {
+        colors[username] = '#ffffff';
+    }
+
     socket.on('disconnect', function () {
         console.log(`${username} disconnected`)
         removeByValue(namesList, username);
@@ -39,6 +44,7 @@ io.on('connection', function (socket) {
             nickname: username,
             message: msg,
             timestamp: getTimeStamp(),
+            color: colors[username],
         });
         console.log(jsonMsg);
 
@@ -57,6 +63,11 @@ io.on('connection', function (socket) {
         username = name;
         io.emit('user list', namesList);
         socket.emit('nickname', username);
+    });
+
+    socket.on('color change', function (color) {
+        colors[username] = `#${color}`;
+        console.log(`${username} changed their color to #${color}`);
     });
 });
 
