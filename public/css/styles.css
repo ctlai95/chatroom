@@ -63,33 +63,18 @@ section {
     display: flex;
 }
 
-.message div {
-    /* background-color: #3a3d4b; */
-    /* padding: 10px; */
-    vertical-align: middle;
-}
-
 .user-msg {
     background-color: #3a3d4b;
     border-radius: 5px;
     padding: 10px;
 }
 
-.username,
-.timestamp {
+.metadata {
     font-size: 0.8em;
     font-style: italic;
     color: #676767;
-}
-
-.username {
     padding: 10px 0 10px 10px;
 }
-
-.timestamp {
-    padding: 10px 0 10px 10px;
-}
-
 
 #nickname-display {
     position: relative;

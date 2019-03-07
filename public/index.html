@@ -59,8 +59,7 @@
                 $('#chat-messages').append(
                     $('<li class="message">').append([
                         $('<div class="user-msg">').text(msg.message),
-                        $('<div class="username">').text(msg.nickname),
-                        $('<div class="timestamp">').text(msg.timestamp),
+                        $('<div class="metadata">').text(`${msg.nickname}, ${msg.timestamp}`),
                     ])
                 );
                 var scrollDiv = document.getElementById("messages-container");
