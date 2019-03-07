@@ -62,7 +62,8 @@
 
                 $('#chat-messages').append(
                     $('<li class="message">').append([
-                        $(`<div class="user-msg" style="color: ${msg.color}">`).text(msg.message),
+                        $(`<div class="user-msg" style="background-color: ${msg.color}">`).text(
+                            msg.message),
                         $('<div class="metadata">').text(
                             `${msg.nickname}, ${msg.timestamp}`),
                     ])

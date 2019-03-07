@@ -60,14 +60,19 @@ io.on('connection', function (socket) {
         }
         console.log(`${username} changed their name to ${name}`);
         namesList[namesList.indexOf(username)] = name;
+        colors[name] = colors[username];
+        delete colors[username];
         username = name;
         io.emit('user list', namesList);
         socket.emit('nickname', username);
     });
 
     socket.on('color change', function (color) {
-        colors[username] = `#${color}`;
-        console.log(`${username} changed their color to #${color}`);
+        if (/(^[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color)) {
+            color = '#' + color;
+        }
+        colors[username] = color;
+        console.log(`${username} changed their color to ${color}`);
     });
 });
 
